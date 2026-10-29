@@ -1,4 +1,4 @@
-//C# Script Cachy by Akari-Codes; https://github.com/Akari-Codes/CSharp-Testing-Ground/tree/main/Working%20Custom%20Modules/interfaces.cs, https://github.com/Akari-Codes/Akaris-Scripts/scripts/bin/interfaces.cs
+//C# Script Cachy by Akari-Codes; https://github.com/Akari-Codes/Akaris-Scripts/scripts/csharp/bin/interfaces.cs
 //Akari-Codes = Thomas Christopher Drury
 //beb9ddf33b713356bdadf269028c0c6f1bc1f5d384dbbcef71811ed262761c43
 using System;
@@ -218,6 +218,6 @@ public static void set_color(int color)
         return;
     }
 }
-//C# Script Cachy by Akari-Codes; https://github.com/Akari-Codes/CSharp-Testing-Ground/tree/main/Working%20Custom%20Modules/interfaces.cs, https://github.com/Akari-Codes/Akaris-Scripts/scripts/bin/interfaces.cs
+//C# Script Cachy by Akari-Codes; https://github.com/Akari-Codes/Akaris-Scripts/scripts/csharp/bin/interfaces.cs
 //Akari-Codes = Thomas Christopher Drury
 //beb9ddf33b713356bdadf269028c0c6f1bc1f5d384dbbcef71811ed262761c43

@@ -1,4 +1,4 @@
-//C# Script Cachy by Akari-Codes; https://github.com/Akari-Codes/CSharp-Testing-Ground/tree/main/Working%20Custom%20Modules/cachy.cs, https://github.com/Akari-Codes/Akaris-Scripts/scripts/bin/cachy.cs
+//C# Script Cachy by Akari-Codes; https://github.com/Akari-Codes/Akaris-Scripts/scripts/csharp/bin/cachy.cs
 //Akari-Codes = Thomas Christopher Drury
 //152787d8bbcc0ababcce6c0643632c4ac853cd5615fbb92c4a1647a88b43a227
 using System;
@@ -137,6 +137,6 @@ internal partial class cachy
         return;
     }
 }
-//C# Script Cachy by Akari-Codes; https://github.com/Akari-Codes/CSharp-Testing-Ground/tree/main/Working%20Custom%20Modules/cachy.cs, https://github.com/Akari-Codes/Akaris-Scripts/scripts/bin/cachy.cs
+//C# Script Cachy by Akari-Codes; https://github.com/Akari-Codes/Akaris-Scripts/scripts/csharp/bin/cachy.cs
 //Akari-Codes = Thomas Christopher Drury
 //152787d8bbcc0ababcce6c0643632c4ac853cd5615fbb92c4a1647a88b43a227
