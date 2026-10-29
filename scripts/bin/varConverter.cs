@@ -1,4 +1,4 @@
-//C# Script Cachy by Akari-Codes; https://github.com/Akari-Codes/CSharp-Testing-Ground/tree/main/Working%20Custom%20Modules/varConverter.cs, https://github.com/Akari-Codes/Akaris-Scripts/scripts/bin/varConverter.cs
+//C# Script Cachy by Akari-Codes; https://github.com/Akari-Codes/CSharp-Testing-Ground/tree/main/Working%20Custom%20Modules/varConverter.cs, https://github.com/Akari-Codes/Akaris-Scripts/scripts/bin/varConverter.cs, https://akari-codes.github.io/Akaris-Scripts/
 //Akari-Codes = Thomas Christopher Drury
 //fcfe1d3b59ad007ebd683e8d847ee74e4b8e5be82280477df07b55255741df1c
 using System.Reflection;
@@ -344,6 +344,6 @@ internal partial class varConverter
         };
     }
 }
-//C# Script Cachy by Akari-Codes; https://github.com/Akari-Codes/CSharp-Testing-Ground/tree/main/Working%20Custom%20Modules/varConverter.cs, https://github.com/Akari-Codes/Akaris-Scripts/scripts/bin/varConverter.cs
+//C# Script Cachy by Akari-Codes; https://github.com/Akari-Codes/CSharp-Testing-Ground/tree/main/Working%20Custom%20Modules/varConverter.cs, https://github.com/Akari-Codes/Akaris-Scripts/scripts/bin/varConverter.cs, https://akari-codes.github.io/Akaris-Scripts/
 //Akari-Codes = Thomas Christopher Drury
 //fcfe1d3b59ad007ebd683e8d847ee74e4b8e5be82280477df07b55255741df1c
