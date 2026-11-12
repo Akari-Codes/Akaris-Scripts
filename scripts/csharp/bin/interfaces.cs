@@ -17,87 +17,181 @@ internal partial class tui
         return;
     }
     public static string[] get() {
-    string[] tui = ui_db.fetch();
-    return tui;
+        string[] tui = ui_db.fetch();
+        return tui;
     }
     public static string interfaces(string name)
-{
-    string[] uiArchive = get();
-    int c = 0;
-    string ui = "Error No Ui Found Called '" + name + "'";
-    foreach (string x in uiArchive)
     {
-        if (x == name)
+        string[] uiArchive = get();
+        int c = 0;
+        string ui = "Error No Ui Found Called '" + name + "'";
+        foreach (string x in uiArchive)
         {
-            ui = uiArchive[c+1];
-            break;
+            if (x == name)
+            {
+                ui = uiArchive[c+1];
+                break;
+            }
+            c++;
         }
-        c++;
+        return ui;
     }
-    return ui;
-}
-public static int interMem(string name)
-{
-    string[] memArchive = get();
-    int c = 0;
-    int mem = -1;
-    foreach (string x in memArchive)
+    public static void styledExit(int exitCode = 1)
     {
-        if (x == name)
+        cls();
+        try
         {
-            mem = varConverter.convert_to_int(memArchive[c+2]);
-            break;
+            string message = cachy.get("exitMessage","String");
+            int messageLength = message.Length;
+            string m = "=======";
+            string exitM = "Issued Exit Code = " + varConverter.convert_to_string(exitCode);
+            if(exitM.Length < messageLength) {int count = 0;
+                while(count != messageLength)
+                {
+                    m += "=";
+                    count++;
+                }
+            } else {int count = 0;
+                while(count != exitM.Length)
+                {
+                    m += "=";
+                    count++;
+                }}
+                Console.WriteLine(m);
+                Console.WriteLine();
+                Console.WriteLine(" | " + exitM + " | ");
+                Console.WriteLine(" | " + message + " | ");
+                Console.WriteLine();
+                Console.WriteLine(m);
+                System.Environment.Exit(exitCode);
         }
-        c++;
+        catch
+        {
+            string message = "Program Exited!";
+            int messageLength = message.Length;
+            string m = "====";
+            string exitM = "Issued Exit Code = " + varConverter.convert_to_string(exitCode);
+            if(exitM.Length < messageLength) {int count = 0;
+                while(count != messageLength)
+                {
+                    m += "=";
+                    count++;
+                }
+            } else {int count = 0;
+                while(count != exitM.Length)
+                {
+                    m += "=";
+                    count++;
+                }}
+                Console.WriteLine(m);
+                Console.WriteLine();
+                Console.WriteLine("| " + exitM + " |");
+                Console.WriteLine("| " + message + " |");
+                Console.WriteLine();
+                Console.WriteLine(m);
+                System.Environment.Exit(exitCode);
+        };
     }
-    return mem;
-}
-public static string keyListen()
+    public static int interMem(string name)
+    {
+        string[] memArchive = get();
+        int c = 0;
+        int mem = -1;
+        foreach (string x in memArchive)
+        {
+            if (x == name)
+            {
+                mem = varConverter.convert_to_int(memArchive[c+2]);
+                break;
+            }
+            c++;
+        }
+        return mem;
+    }
+    public static string keyListen()
     {
         return varConverter.convert_to_string(Console.ReadKey().Key);
     }
-public static dynamic[] Menu(int mem, int cMem = 1, params string[] vars)
+    public static dynamic[] Menu(int mem, int cMem = 1, params string[] vars)
     {
         string dep = "null";
         dynamic[] dataOutput = new dynamic[2];
         while (dep == "null")
         {
-            dataOutput = interMenu(mem,cMem,vars);
+            dataOutput = interMenuFixed(mem,cMem,vars);
             dep = dataOutput[0];
             cMem = dataOutput[1];
         }
         return dataOutput;
     }
-public static dynamic[] cMenu(int mem, string[] accepted_options, int cMem = 1, params string[] vars)
+    public static dynamic[] cMenu(int mem, string[] accepted_options, int cMem = 1, params string[] vars)
     {
         string dep = "null";
         dynamic[] dataOutput = new dynamic[2];
-        while (accepted(accepted_options, dep) == false)
+        while (dep == "null")
         {
-            dataOutput = interMenu(mem,cMem,vars);
+            dataOutput = interMenuFlex(mem,cMem,vars);
             dep = dataOutput[0];
             cMem = dataOutput[1];
-        }
-        if(dep == "null")
-        {
-            dataOutput[0] = dataOutput[2];
-        }
-        static bool accepted(string[] accepted_options, string dep)
-        {
-            bool output = false;
             foreach(string x in accepted_options)
             {
                 if(dep == x)
                 {
-                    output = true;
                     break;
                 }
-            }
-            return output;
-        }
-        return dataOutput;
+            }}
+            return dataOutput;
     }
-public static dynamic[] interMenu(int mem, int cMem, string[] vars)
+    public static dynamic[] interMenuFlex(int mem, int cMem, string[] vars)
+    {
+        string key = keyListen();
+        if(key == "Escape")
+        {
+            styledExit();
+        }
+        else if(key == "Enter")
+        {
+            return ["clicked",cMem];
+        }
+        else if(key == "Spacebar")
+        {
+            return ["selected",cMem];
+        }
+        else if(key == "Backspace")
+        {
+            return ["back",cMem];
+        }
+        else if (key == "UpArrow")
+        {
+            if(cMem == 1)
+            {
+                cMem = mem;
+                Reload(cMem,vars);
+                return interMenuFlex(mem,cMem,vars);
+            }else
+            {
+                cMem--;
+                Reload(cMem,vars);
+                return interMenuFlex(mem,cMem,vars);
+            }
+        }
+        else if(key == "DownArrow")
+        {
+            if(cMem == mem)
+            {
+                cMem = 1;
+                Reload(cMem,vars);
+                return interMenuFlex(mem,cMem,vars);
+            } else
+            {
+                cMem++;
+                Reload(cMem,vars);
+                return interMenuFlex(mem,cMem,vars);
+            }
+        }
+        return [key,cMem];
+    }
+    public static dynamic[] interMenuFixed(int mem, int cMem, string[] vars)
     {
         string key = keyListen();
         if(key == "Enter")
@@ -114,40 +208,40 @@ public static dynamic[] interMenu(int mem, int cMem, string[] vars)
         }
         else if(key == "Escape")
         {
-            System.Environment.Exit(1);
+            styledExit();
         }
         else {
-        if (key == "UpArrow")
-        {
-            if(cMem == 1)
+            if (key == "UpArrow")
             {
-                cMem = mem;
-                Reload(cMem,vars);
-                return ["null",cMem];
-            }else
-            {
-                cMem--;
-                Reload(cMem,vars);
-                return ["null",cMem];
+                if(cMem == 1)
+                {
+                    cMem = mem;
+                    Reload(cMem,vars);
+                    return ["null",cMem];
+                }else
+                {
+                    cMem--;
+                    Reload(cMem,vars);
+                    return ["null",cMem];
+                }
             }
-        }
             else if(key == "DownArrow")
             {
                 if(cMem == mem)
-            {
-                cMem = 1;
-                Reload(cMem, vars);
-                return ["null",cMem];
-            } else
-            {
-                cMem++;
-                Reload(cMem, vars);
-                return ["null",cMem];
-            }
-        }}
-        return ["null",cMem,key];
+                {
+                    cMem = 1;
+                    Reload(cMem, vars);
+                    return ["null",cMem];
+                } else
+                {
+                    cMem++;
+                    Reload(cMem, vars);
+                    return ["null",cMem];
+                }
+            }}
+            return ["null",cMem,key];
     }
-public static int load(string name, int cMem = 1,params string[] vars)
+    public static int load(string name, int cMem = 1,params string[] vars)
     {   string interf = interfaces(name);
         string[] lines = interf.Split(Environment.NewLine);
         int mem = 0;
@@ -158,7 +252,7 @@ public static int load(string name, int cMem = 1,params string[] vars)
             if (x.Contains("var(" + varConverter.convert_to_string(varsCount) + ")") && vars != null)
             {
                 StringBuilder builder = new StringBuilder(x);
-            builder.Replace("var(" + varConverter.convert_to_string(varsCount) + ")", vars[varsCount - 1]);
+                builder.Replace("var(" + varConverter.convert_to_string(varsCount) + ")", vars[varsCount - 1]);
                 lines[count] = builder.ToString();
                 varsCount++;
             }
@@ -179,7 +273,7 @@ public static int load(string name, int cMem = 1,params string[] vars)
         cachy.set("currentTui",name,"String");
         return mem;
     }
-public static void Reload(int cMem, string[] vars)
+    public static void Reload(int cMem, string[] vars)
     {
         cls();
         string interf = interfaces(cachy.get("currentTui","String"));
@@ -189,10 +283,10 @@ public static void Reload(int cMem, string[] vars)
         int varsCount = 1;
         foreach (string x in lines)
         {
-             if (x.Contains("var(" + varConverter.convert_to_string(varsCount) + ")"))
-            {   
-            StringBuilder builder = new StringBuilder(x);
-            builder.Replace("var(" + varConverter.convert_to_string(varsCount) + ")", vars[varsCount - 1]);
+            if (x.Contains("var(" + varConverter.convert_to_string(varsCount) + ")"))
+            {
+                StringBuilder builder = new StringBuilder(x);
+                builder.Replace("var(" + varConverter.convert_to_string(varsCount) + ")", vars[varsCount - 1]);
                 lines[count] = builder.ToString();
                 varsCount++;
             }
@@ -206,13 +300,13 @@ public static void Reload(int cMem, string[] vars)
                 }
             }
             count++;
-            };
-            string ui = string.Join(Environment.NewLine,lines);
-            ui = ui.Replace("menuItem()","");
-            Console.WriteLine(ui);
-            return;
-        }
-public static void set_color(int color)
+        };
+        string ui = string.Join(Environment.NewLine,lines);
+        ui = ui.Replace("menuItem()","");
+        Console.WriteLine(ui);
+        return;
+    }
+    public static void set_color(int color)
     {
         cachy.set("uiColor",color,"Int");
         return;
